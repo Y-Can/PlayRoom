@@ -3,6 +3,7 @@ import { View, Text, TextInput, Image, TouchableOpacity, Alert } from 'react-nat
 import axios from 'axios';
 import { useUserStore } from '../store/useUserStore';
 import { useNavigation } from '@react-navigation/native';
+import { API_URL } from '../constants/api';
 
 const getRandomName = () => {
   const adjectives = ['Cool', 'Dark', 'Swift', 'Fire', 'Silent', 'Epic'];
@@ -15,14 +16,14 @@ const getRandomName = () => {
 };
 
 export default function AuthScreen() {
+  const setUser = useUserStore((state) => state.setUser);
   const [pseudo, setPseudo] = useState(getRandomName());
   const avatar = `https://api.dicebear.com/6.x/bottts/svg?seed=${pseudo}`;
-  const setUser = useUserStore((state) => state.setUser);
   const navigation = useNavigation();
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://localhost:3000/auth/guest');
+      const res = await axios.post(`${API_URL}/auth/guest`);
       setUser({ ...res.data.user, token: res.data.token });
       navigation.navigate('Home');
     } catch (err) {

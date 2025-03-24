@@ -4,8 +4,8 @@ import { useUserStore } from '../../store/useUserStore';
 import { useSocket } from '../../hooks/useSocket';
 
 export default function HomeScreen() {
+  const user = useUserStore((state: { user: any; }) => state.user);
     const socket = useSocket();
-    const user = useUserStore((state: { user: any; }) => state.user);
   const [roomId, setRoomId] = useState('');
 
   const joinRoom = () => {

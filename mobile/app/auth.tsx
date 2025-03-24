@@ -3,8 +3,11 @@ import { View, Text, TextInput, Image, TouchableOpacity, Alert } from 'react-nat
 import axios from 'axios';
 import { useUserStore } from '../store/useUserStore';
 import { useRouter } from 'expo-router';
+import { API_URL } from '../constants/api';
+
 
 const getRandomName = () => {
+  
   const adjectives = ['Cool', 'Dark', 'Swift', 'Fire', 'Silent', 'Epic'];
   const animals = ['Panther', 'Wolf', 'Eagle', 'Ninja', 'Tiger', 'Shadow'];
   return (
@@ -15,16 +18,16 @@ const getRandomName = () => {
 };
 
 export default function AuthScreen() {
+  const setUser = useUserStore((state: { setUser: any; }) => state.setUser);
   const [pseudo, setPseudo] = useState(getRandomName());
   const avatar = `https://api.dicebear.com/6.x/bottts/svg?seed=${pseudo}`;
-  const setUser = useUserStore((state: { setUser: any; }) => state.setUser);
   const router = useRouter();
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://localhost:3000/auth/guest');
+      const res = await axios.post(`${API_URL}/auth/guest`);
       setUser({ ...res.data.user, token: res.data.token });
-      router.replace('/tabs/home');
+      router.replace('/(tabs)/home');
     } catch (err) {
       console.error(err);
       Alert.alert('Erreur', "Impossible de se connecter");
