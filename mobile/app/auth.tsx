@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity, Alert } from 'react-native';
 import axios from 'axios';
 import { useUserStore } from '../store/useUserStore';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 
 const getRandomName = () => {
   const adjectives = ['Cool', 'Dark', 'Swift', 'Fire', 'Silent', 'Epic'];
@@ -17,14 +17,14 @@ const getRandomName = () => {
 export default function AuthScreen() {
   const [pseudo, setPseudo] = useState(getRandomName());
   const avatar = `https://api.dicebear.com/6.x/bottts/svg?seed=${pseudo}`;
-  const setUser = useUserStore((state) => state.setUser);
-  const navigation = useNavigation();
+  const setUser = useUserStore((state: { setUser: any; }) => state.setUser);
+  const router = useRouter();
 
   const handleLogin = async () => {
     try {
       const res = await axios.post('http://localhost:3000/auth/guest');
       setUser({ ...res.data.user, token: res.data.token });
-      navigation.navigate('Home');
+      router.replace('/tabs/home');
     } catch (err) {
       console.error(err);
       Alert.alert('Erreur', "Impossible de se connecter");
@@ -32,20 +32,17 @@ export default function AuthScreen() {
   };
 
   return (
-    <View className="flex-1 items-center justify-center bg-white p-6">
-      <Text className="text-2xl font-bold mb-4">Bienvenue sur PlayRoom</Text>
-
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>Bienvenue sur PlayRoom</Text>
       <Image source={{ uri: avatar }} style={{ width: 100, height: 100, marginBottom: 20 }} />
-
       <TextInput
         value={pseudo}
         onChangeText={setPseudo}
         placeholder="Entre ton pseudo"
-        className="border border-gray-300 rounded px-4 py-2 w-full mb-4"
+        style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 5, padding: 10, width: '100%', marginBottom: 20 }}
       />
-
-      <TouchableOpacity onPress={handleLogin} className="bg-blue-500 p-3 rounded w-full items-center">
-        <Text className="text-white font-bold">Entrer dans PlayRoom</Text>
+      <TouchableOpacity onPress={handleLogin} style={{ backgroundColor: '#007bff', padding: 15, borderRadius: 5 }}>
+        <Text style={{ color: '#fff', fontWeight: 'bold' }}>Entrer dans PlayRoom</Text>
       </TouchableOpacity>
     </View>
   );
