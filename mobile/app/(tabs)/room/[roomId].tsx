@@ -76,6 +76,9 @@ export default function RoomScreen() {
 
   return (
     <View style={styles.container}>
+              <TouchableOpacity onPress={() => router.replace('/(tabs)/salons')} style={styles.backBtn}>
+              <Text style={styles.backText}>← Accueil</Text>
+            </TouchableOpacity>
       <Text style={styles.title}>Salon : {roomId}</Text>
 
       <View style={styles.playersWrap}>
@@ -91,7 +94,7 @@ export default function RoomScreen() {
         data={messages}
         style={{ flex: 1 }}
         contentContainerStyle={{ paddingBottom: 10 }}
-        keyExtractor={(_, index) => index.toString()}
+        keyExtractor={(item) => `${item.pseudo}-${item.timestamp}`}
         renderItem={({ item }) => (
           <View style={styles.messageBubble}>
             <Text style={styles.messageUser}>{item.pseudo}</Text>
@@ -155,5 +158,15 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 6,
     alignItems: 'center',
+  },
+  backBtn: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    zIndex: 10,
+  },
+  backText: {
+    fontSize: 16,
+    color: '#007bff',
   },
 });

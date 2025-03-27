@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity,StyleSheet } from 'react-native';
 import { useEffect } from 'react';
 
 export default function GameOverScreen() {
@@ -14,6 +14,9 @@ export default function GameOverScreen() {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', padding: 20 }}>
+           <TouchableOpacity onPress={() => router.replace('/(tabs)/salons')} style={styles.backBtn}>
+              <Text style={styles.backText}>← Accueil</Text>
+            </TouchableOpacity>
       <Text style={{ fontSize: 28, fontWeight: 'bold', marginBottom: 16, textAlign: 'center' }}>
         🏁 Fin de la partie !
       </Text>
@@ -42,7 +45,7 @@ export default function GameOverScreen() {
       />
 
       <TouchableOpacity
-        onPress={() => router.replace('/tabs/home')}
+        onPress={() => router.replace('/(tabs)/home')}
         style={{ backgroundColor: '#007bff', padding: 14, marginTop: 20, borderRadius: 8, alignItems: 'center' }}
       >
         <Text style={{ color: '#fff', fontWeight: 'bold' }}>Retour à l'accueil</Text>
@@ -50,3 +53,18 @@ export default function GameOverScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+
+  backBtn: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    zIndex: 10,
+  },
+  backText: {
+    fontSize: 16,
+    color: '#007bff',
+  },
+
+});

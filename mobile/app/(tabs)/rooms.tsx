@@ -12,6 +12,7 @@ import {
 import { useUserStore } from '../../store/useUserStore';
 import { useSocket } from '../../hooks/useSocket';
 import { useLocalSearchParams,useRouter } from 'expo-router';
+import { BackToTabsButton } from '@/components/BackToTabsButton';
 
 
 
@@ -202,6 +203,8 @@ export default function RoomScreen() {
       >
         <Text style={{ color: '#fff', fontWeight: 'bold' }}>🎮 Lancer la partie</Text>
       </TouchableOpacity>
+      < BackToTabsButton />
+
     </KeyboardAvoidingView>
   );
 }

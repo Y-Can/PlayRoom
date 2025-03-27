@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert,StyleSheet  } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useSocket } from '../../hooks/useSocket';
 import { useUserStore } from '../../store/useUserStore';
@@ -96,6 +96,9 @@ export default function QuizScreen() {
 
   return (
     <View style={{ flex: 1, padding: 24, justifyContent: 'center' }}>
+        <TouchableOpacity onPress={() => router.replace('/(tabs)/salons')} style={styles.backBtn}>
+        <Text style={styles.backText}>← Accueil</Text>
+      </TouchableOpacity>
       <Text style={{ fontSize: 22, fontWeight: 'bold', marginBottom: 16 }}>
         Question {round} / {total}
       </Text>
@@ -125,4 +128,20 @@ export default function QuizScreen() {
       )}
     </View>
   );
+  
 }
+
+const styles = StyleSheet.create({
+
+  backBtn: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    zIndex: 10,
+  },
+  backText: {
+    fontSize: 16,
+    color: '#007bff',
+  },
+
+});
